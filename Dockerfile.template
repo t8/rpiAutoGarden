@@ -15,4 +15,4 @@ CMD ./build
 #Now we need the MegaIO stuff
 RUN git clone https://github.com/alexburcea2877/megaio-rpi.git
 RUN cd megaio-rpi
-RUN sudo make install
+CMD sudo make install
