@@ -9,7 +9,7 @@ RUN pip install -r /requirements.txt
 
 #We need the WiringPi GPIO stuff
 RUN git clone git://git.drogon.net/wiringPi
-RUN cd ~/wiringPi
+RUN cd wiringPi
 RUN ./build
 
 #Now we need the MegaIO stuff
