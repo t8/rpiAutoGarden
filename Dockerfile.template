@@ -9,13 +9,10 @@ RUN pip install -r /requirements.txt
 
 #We need the WiringPi GPIO stuff
 RUN git clone git://git.drogon.net/wiringPi
-CMD cd wiringPi
+CMD cd wiringPi/
 CMD ./build
 
 #Now we need the MegaIO stuff
 RUN git clone https://github.com/alexburcea2877/megaio-rpi.git
-CMD cd megaio-rpi
-CMD make clean
-CMD make install
-
-RUN echo Device has initialized!
+CMD cd megaio-rpi/
+CMD sudo make install
