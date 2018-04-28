@@ -101,7 +101,10 @@ ENV/
 .mypy_cache/
 
 # Node_Modules
-Node_Modules/
+node_modules/
 
 # DS_Store
 .DS_Store
+
+# No NPM with Python
+package-lock.json
