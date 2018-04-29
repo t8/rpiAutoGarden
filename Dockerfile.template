@@ -3,16 +3,22 @@ FROM resin/%%RESIN_MACHINE_NAME%%-python
 #Switch on systemd init system in container
 ENV INITSYSTEM on
 
+#Setting Working Directory
+WORKDIR /usr/src/
+
 #Gotta get those requirements
-COPY ./requirements.txt /requirements.txt
-RUN pip install -r /requirements.txt
+#COPY ./requirements.txt /requirements.txt
+#RUN pip install -r /requirements.txt
 
 #We need the WiringPi GPIO stuff
 RUN git clone git://git.drogon.net/wiringPi
-CMD cd wiringPi/
+CMD cd wiringPi
 CMD ./build
 
 #Now we need the MegaIO stuff
 RUN git clone https://github.com/alexburcea2877/megaio-rpi.git
-CMD cd megaio-rpi/
+CMD cd megaio-rpi
 CMD make install
+
+# main.py will run when container starts up on the device
+CMD ["python","src/main.py"]
