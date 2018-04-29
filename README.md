@@ -1,10 +1,10 @@
 # Custom RPI Plant Maintainer Thing
-###Features
+### Features
 - Waters your plants
 	- Should prevent your plants from dying (idk)
 		- Unless you're trying to plant something outside in the middle of Winter
 
-###Hardware
+### Hardware
 - Raspberry Pi
 - Micro-USB cord
 - Mirco-SD card
@@ -16,7 +16,7 @@
 - Water Tank
 - Soldering Iron (obviously)
 
-###To start it up:
+### To start it up:
 
 - Download this Respoitory
 - Have a [Resin.io](https://resin.io/) account
@@ -25,6 +25,8 @@
 - Insert the Micro-SD card into your Raspberry PI and power it on
 - If you don't see your device on the Resin.io Dashboard after 10 minutes, you have done something wrong
 - Install the [Resin CLI](https://github.com/resin-io/resin-cli) onto your computer (not the Raspberry Pi)
-  - This should not be installed into this repository
+  - This should not be installed into the root of this repository
+- CD into this repository, wherever you downloaded it
+- Type `resin login` and follow the instructions to login to your Resin.io account
 
 # MORE INSTRUCTIONS COMING WHEN I ACTUALLY MAKE MY OWN
