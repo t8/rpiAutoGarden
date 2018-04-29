@@ -12,7 +12,7 @@ WORKDIR /usr/src/app
 
 #Cloning Mega-io Repository
 RUN git clone https://github.com/alexburcea2877/megaio-rpi.git
-CMD cd megaio-rpi && make install && cd … && rm -rf megaio-rpi
+CMD cd megaio-rpi && make install && cd .. && rm -rf megaio-rpi
 
 COPY . ./
 
