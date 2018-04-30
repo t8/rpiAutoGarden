@@ -4,8 +4,6 @@ FROM resin/%%RESIN_MACHINE_NAME%%-python
 #COPY ./requirements.txt /requirements.txt
 #RUN pip install -r /requirements.txt
 
-RUN apt-get install python3.6
-
 #Retrieving WiringPi Repository
 RUN apt-get update && apt-get install -yq wiringpi git
 
