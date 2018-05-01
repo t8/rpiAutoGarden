@@ -20,4 +20,4 @@ COPY . ./
 ENV INITSYSTEM on
 
 #Running initial script
-CMD [“python”,“main.py”]
+CMD [“python”,“/usr/src/app/main.py”]
