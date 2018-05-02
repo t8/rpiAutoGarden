@@ -1,25 +1,23 @@
 FROM resin/%%RESIN_MACHINE_NAME%%-python
 
-#Gotta get those requirements
-#COPY ./requirements.txt /requirements.txt
-#RUN pip install -r /requirements.txt
-
-#Retrieving WiringPi Repository
+# Installing WiringPi Library Package
 RUN apt-get update && apt-get install -yq wiringpi git
 
-#Setting working directory
+# Setting working directory
 WORKDIR /usr/src/app
 
-#Cloning Mega-io Repository
-RUN git clone https://github.com/alexburcea2877/megaio-rpi.git
-#CMD cd megaio-rpi && make install && cd ../ && rm -rf megaio-rpi
-CMD make install
-CMD cd ../ && rm -rf megaio-rpi
+# Building and installing Mega-io Repository
+RUN cd /usr/src/app && git clone https://github.com/alexburcea2877/megaio-rpi.git
+RUN cd /usr/src/app/megaio-rpi && make install
+
+COPY ./requirements.txt /requirements.txt
+# Gotta get those requirements
+RUN pip install -r /requirements.txt
 
 COPY . ./
 
-#Initializing system
+# Initializing system
 ENV INITSYSTEM on
 
-#Running initial script
-CMD [“python”,“main.py”]
+# Running initial script
+CMD ["python","main.py"]
