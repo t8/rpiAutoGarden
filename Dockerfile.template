@@ -14,6 +14,10 @@ COPY ./requirements.txt /requirements.txt
 # Gotta get those requirements
 RUN pip install -r /requirements.txt
 
+# Installing Local Dashboard Web-Server
+RUN cd /usr/src/app && git clone https://github.com/tbaumer22/megaio-web-interface.git
+RUN cd /usr/src/app/megaio-web-interface/app && python index.py
+
 COPY . ./
 
 # Initializing system
