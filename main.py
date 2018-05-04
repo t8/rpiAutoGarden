@@ -19,8 +19,9 @@ def initialization():
 def update():
     lookup = weather.lookup(2487365)
     condition = lookup.condition
-    if lookup.forecast.high > 75:
-        needToWaterMore = True
+    print(condition.text)
+    # if lookup.forecast.high > 75:
+    #     needToWaterMore = True
 
 
 def startWatering(stack, relayNum):
