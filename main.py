@@ -13,6 +13,7 @@ needToWaterMore = False
 
 def initialization():
     schedule.every().day.at("11:30").do(startWatering, [0, 1])
+    updateWeather()
     schedule.every().hour.do(updateWeather)
 
 
