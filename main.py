@@ -9,7 +9,7 @@ lookup = weather.lookup(2487365)
 condition = lookup.condition
 
 needToWaterMore = False
-triggerConditions = ["tropical storm", "showers", "hail", "sleet", "mixed rain and hail", "hot", "scattered showers", "scattered showers", "thundershowers"]
+triggerConditions = ["tropical storm", "showers", "hail", "sleet", "mixed rain and hail", "scattered showers", "scattered showers", "thundershowers"]
 
 
 def initialization():
@@ -31,11 +31,12 @@ def updateWeather():
 def startWatering(stack, relayNum):
     os.system("megaio " + str(stack) + " rwrite " + str(relayNum) + " on")
     print("NOW WATERING THE PLANTS")
-    needToStop = Timer(15.0, stopWatering, [stack,relayNum])
+    needToStop = Timer(15.0, stopWatering, [stack, relayNum])
     needToStop.start()
     if needToWaterMore == True:
-        waterMore = Timer(20.0, startWatering, [0, 1])
-        waterMore.start()
+        schedule.every().day.at('15:30').do(startWatering, [stack, relayNum]).tag('extra-cycle')
+    else:
+        schedule.clear('extra-cycle')
 
 
 def stopWatering(stack, relayNum):
