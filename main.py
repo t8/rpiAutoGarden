@@ -24,9 +24,11 @@ def updateWeather():
     lowerCaseCondition = condition.text.lower()
 
     if triggerConditions.count(lowerCaseCondition) > 0 and dt.datetime.today().hour == 6:
-        schedule.clear('cycle-1')
+        needToWaterEarly = False
+    else:
+        needToWaterEarly = True
 
-    if triggerConditions.count(lowerCaseCondition) > 0:
+    if triggerConditions.count(lowerCaseCondition) > 0 and dt.datetime.today().hour == 18:
         needToWaterMore = False
     else:
         needToWaterMore = True
@@ -40,6 +42,7 @@ def startWatering(stack, relayNum):
         needToStop.start()
     else:
         print("SKIPPING EARLY WATER CYCLE: " + condition.text)
+
     if needToWaterMore:
         os.system("megaio " + str(stack) + " rwrite " + str(relayNum) + " on")
         print("NOW WATERING THE PLANTS AT 6:30 PM")
