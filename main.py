@@ -1,5 +1,6 @@
 import os
 import time
+import  datetime as dt
 import schedule
 from threading import Timer
 from weather import Weather, Unit
@@ -8,17 +9,22 @@ weather = Weather(unit=Unit.CELSIUS)
 lookup = weather.lookup(2487365)
 condition = lookup.condition
 
+needToWaterEarly = True
 needToWaterMore = True
 triggerConditions = ["tropical storm", "showers", "hail", "sleet", "mixed rain and hail", "scattered showers", "scattered showers", "thundershowers"]
 
 
 def updateWeather():
+    global needToWaterEarly
     global needToWaterMore
     global lookup
     global condition
     lookup = weather.lookup(2487365)
     condition = lookup.condition
     lowerCaseCondition = condition.text.lower()
+
+    if triggerConditions.count(lowerCaseCondition) > 0 and dt.datetime.today().hour == 6:
+        schedule.clear('cycle-1')
 
     if triggerConditions.count(lowerCaseCondition) > 0:
         needToWaterMore = False
@@ -27,14 +33,20 @@ def updateWeather():
 
 
 def startWatering(stack, relayNum):
-    os.system("megaio " + str(stack) + " rwrite " + str(relayNum) + " on")
-    print("NOW WATERING THE PLANTS")
-    needToStop = Timer(15.0, stopWatering, [stack, relayNum])
-    needToStop.start()
-    if needToWaterMore:
-        schedule.every().day.at('15:30').do(startWatering, [stack, relayNum]).tag('extra-cycle')
+    if needToWaterEarly:
+        os.system("megaio " + str(stack) + " rwrite " + str(relayNum) + " on")
+        print("NOW WATERING THE PLANTS AT 7:00 AM")
+        needToStop = Timer(150.0, stopWatering, [stack, relayNum])
+        needToStop.start()
     else:
-        schedule.clear('extra-cycle')
+        print("SKIPPING EARLY WATER CYCLE: " + condition.text)
+    if needToWaterMore:
+        os.system("megaio " + str(stack) + " rwrite " + str(relayNum) + " on")
+        print("NOW WATERING THE PLANTS AT 6:30 PM")
+        needToStop = Timer(150.0, stopWatering, [stack, relayNum])
+        needToStop.start()
+    else:
+        print("SKIPPING LATE WATER CYCLE: " + condition.text)
 
 
 def stopWatering(stack, relayNum):
@@ -42,7 +54,8 @@ def stopWatering(stack, relayNum):
     print("FINISHED WATERING THE PLANTS")
 
 
-schedule.every().day.at("1:30").do(startWatering, [0, 1])
+schedule.every().day.at("7:00").do(startWatering, [0, 1])
+schedule.every().day.at("18:30").do(startWatering, [0, 1])
 schedule.every().hour.do(updateWeather)
 while True:
     schedule.run_pending()
