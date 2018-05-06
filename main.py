@@ -11,7 +11,7 @@ condition = lookup.condition
 
 needToWaterEarly = True
 needToWaterMore = True
-triggerConditions = ["tropical storm", "showers", "hail", "sleet", "mixed rain and hail", "scattered showers", "scattered showers", "thundershowers"]
+triggerConditions = ["tropical storm", "showers", "hail", "sleet", "mixed rain and hail", "scattered showers", "thundershowers"]
 
 
 def updateWeather():
