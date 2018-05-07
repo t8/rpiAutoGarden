@@ -57,8 +57,8 @@ def stopWatering(stack, relayNum):
     print("FINISHED WATERING THE PLANTS")
 
 
-schedule.every().day.at("7:00").do(startWatering, [0, 1])
-schedule.every().day.at("18:30").do(startWatering, [0, 1])
+schedule.every().day.at("7:00").do(startWatering, 0, 1)
+schedule.every().day.at("18:30").do(startWatering, 0, 1)
 schedule.every().hour.do(updateWeather)
 while True:
     schedule.run_pending()
