@@ -23,7 +23,7 @@ def updateWeather():
     condition = lookup.condition
     lowerCaseCondition = condition.text.lower()
 
-    if triggerConditions.count(lowerCaseCondition) > 0 and dt.datetime.today().hour == 6:
+    if triggerConditions.count(lowerCaseCondition) > 0 and dt.datetime.today().hour == 7:
         needToWaterEarly = False
     else:
         needToWaterEarly = True
@@ -35,7 +35,7 @@ def updateWeather():
 
 
 def startWatering(stack, relayNum):
-    if needToWaterEarly:
+    if needToWaterEarly and dt.datetime.today().hour == 7:
         os.system("megaio " + str(stack) + " rwrite " + str(relayNum) + " on")
         print("NOW WATERING THE PLANTS AT 7:00 AM")
         needToStop = Timer(150.0, stopWatering, [stack, relayNum])
@@ -43,7 +43,7 @@ def startWatering(stack, relayNum):
     else:
         print("SKIPPING EARLY WATER CYCLE: " + condition.text)
 
-    if needToWaterMore:
+    if needToWaterMore and dt.datetime.today().hour == 18:
         os.system("megaio " + str(stack) + " rwrite " + str(relayNum) + " on")
         print("NOW WATERING THE PLANTS AT 6:30 PM")
         needToStop = Timer(150.0, stopWatering, [stack, relayNum])
@@ -57,7 +57,7 @@ def stopWatering(stack, relayNum):
     print("FINISHED WATERING THE PLANTS")
 
 
-schedule.every().day.at("7:00").do(startWatering, 0, 1)
+schedule.every().day.at("7:10").do(startWatering, 0, 1)
 schedule.every().day.at("18:30").do(startWatering, 0, 1)
 schedule.every().hour.do(updateWeather)
 while True:
